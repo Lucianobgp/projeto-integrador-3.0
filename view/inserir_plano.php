@@ -1,48 +1,115 @@
 <!doctype html>
 <html lang="pt-br">
-    <head>
-        <title>Cadastro de plano de contas</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <!-- Bootstrap CSS v5.3.3 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<head>
+    <title>Cadastro de Plano de Contas</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background: #f0f2f5;
+        }
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <!-- meu css estilizdo -->
-        <link rel="stylesheet" href="static/style.css">
-    </head>
+        .main-content {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
 
-    <body>
-        <header>
-            <!-- place navbar here -->
-        </header>
-        <main>
-            <div class="container d-flex justify-content-center mt-5">
-                <form class="row p-3 m-3 border border-info rounded shadow-lg" method="post" action="index.php">
-                    <div class="container text-center pb-2">
-                        <h6>CADASTRO DE PLANOS DE CONTAS</h6>
-                    </div>
-                    <div class="col">
+        .form-container {
+            max-width: 800px;
+            width: 100%;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.08);
+            border-radius: 15px;
+            background: white;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+        }
+        .form-content {
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 1.5rem;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e0e5ec;
+            background: white;
+            margin-bottom: 1rem;
+        }
+        .form-control:focus {
+            border-color: #0061f2;
+            box-shadow: 0 0 0 0.2rem rgba(0, 97, 242, 0.25);
+        }
+        .section-title {
+            color: #0061f2;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e5ec;
+        }
+        .btn-action {
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            margin: 0 0.5rem;
+            transition: all 0.3s;
+        }
+        .btn-save {
+            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
+            color: white;
+            border: none;
+        }
+        .btn-save:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="main-content">
+        <div class="container form-container">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4 class="mb-0"><i class="bi bi-list-check"></i> Cadastro de Plano de Contas</h4>
+                </div>
+                
+                <form method="post" action="index.php">
+                    <div class="form-content">
+                        <h5 class="section-title">Informações do Plano de Contas</h5>
+                        
                         <div class="mb-3">
-                            <label for="desc_plano" class="form-label">Plano de Contas:</label>
-                            <input type="text" required name="desc_plano" class="form-control" id="desc_plano" placeholder="Cadastre os planos de contas...">
+                            <label class="form-label">Descrição do Plano</label>
+                            <input type="text" required name="desc_plano" class="form-control" 
+                                   placeholder="Digite a descrição do plano...">
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button type="reset" class="btn btn-outline-info"><i class="bi bi-eraser"></i> Apagar</button>
-                        <button type="submit" name="inserir_plano" class="btn btn-outline-info"><i class="bi bi-check-lg"></i> Salvar</button>
+
+                        <div class="text-center mt-4">
+                            <button type="reset" class="btn btn-outline-secondary btn-action">
+                                <i class="bi bi-eraser"></i> Limpar
+                            </button>
+                            <button type="submit" name="inserir_plano" class="btn btn-save btn-action">
+                                <i class="bi bi-check-circle"></i> Salvar
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
-        </main>
-        <footer>
-            <!-- place footer here -->
-        </footer>
-        <!-- Bootstrap JavaScript Libraries -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

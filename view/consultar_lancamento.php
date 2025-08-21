@@ -1,102 +1,219 @@
 <!doctype html>
 <html lang="pt-br">
-    <head>
-        <title>Consulta de lançamentos</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <!-- Bootstrap CSS v5.3.3 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<head>
+    <title>Consulta de Lançamentos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f0f2f5;
+        }
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        .content-wrapper {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
 
-        <!-- meu css estilizdo -->
-        <link rel="stylesheet" href="static/style.css"> 
-    </head>
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.08);
+            background: white;
+        }
 
-    <body>
-        <header>
-            <!-- place navbar here -->
-        </header>
-        <main>
-            <div class="container d-flex justify-content-center mt-1">
-                <form class="row p-3 m-3 border border-info rounded shadow-lg" method="post" action="index.php">
-                    <div class="container text-center pb-2">
-                        <h6>CONSULTA DE LANÇAMENTOS</h6>
+        .card-header {
+            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+        }
+
+        .table-responsive {
+            padding: 1rem;
+        }
+
+        .table {
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .table thead th {
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e5ec;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 1rem;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e5ec;
+            color: #2c3e50;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Ocultar colunas específicas */
+        .column-hide {
+            display: none;
+        }
+
+        /* Status de lançamento */
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Valor */
+        .value-positive {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .value-negative {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        /* Ações */
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            margin: 0 0.2rem;
+            transition: all 0.3s;
+        }
+
+        .search-box {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.9rem;
+            }
+            
+            .btn-action {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4 class="mb-0"><i class="bi bi-list-check"></i> Consulta de Lançamentos</h4>
+            </div>
+
+            <!-- Área de Pesquisa -->
+            <div class="search-box">
+                <form method="post" action="index.php" class="row g-3 align-items-center">
+                    <div class="col-md-8">
+                        <input type="text" name="desc_lanc" class="form-control" 
+                               placeholder="Pesquisar lançamentos...">
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="desc_lanc" class="form-label">Descrição do lançamento:</label>
-                                <input type="text" name="desc_lanc" class="form-control" id="desc_lanc" placeholder="Digite a descrição...">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button button type="submit" name="consultar_lancamento" class="btn btn-outline-info"><i class="bi bi-search"></i> Consultar</button>
+                    <div class="col-md-4">
+                        <button type="submit" name="consultar_lancamento" class="btn btn-primary w-100">
+                            <i class="bi bi-search"></i> Pesquisar
+                        </button>
                     </div>
                 </form>
             </div>
-            <div class="container-fluid table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="table-info">
-                        <tr class="text-center">
-                            <th>CÓDIGO</th>
-                            <th>TIPO</th>
-                            <th>PLANO DE CONTAS</th>
-                            <th>DESCRIÇÃO DO LANÇAMENTO</th>
-                            <th>DATA DE VENCIMENTO</th>
-                            <th>VALOR</th>
-                            <th>FORMA DE REC/PAG</th>
-                            <th>BANCO</th>
-                            <th>CARTÃO</th>
-                            <th>DATA REC/PAG</th>
-                            <th>AÇÃO</th>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="column-hide">Código</th>
+                            <th>Tipo</th>
+                            <th>Plano</th>
+                            <th>Descrição</th>
+                            <th>Vencimento</th>
+                            <th>Valor</th>
+                            <th>Forma</th>
+                            <th>Banco</th>
+                            <th class="column-hide">Cartão</th>
+                            <th>Pagamento</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            //mostrar os resultados
-                            foreach ($resultado as $key => $valor) {
-                                echo '<tr class="text-center">';
-                                echo '  <th scope="row">' . $valor->id_lanc . '</th>';
-                                echo '  <td>' . $valor->desc_tipo . '</td>';
-                                echo '  <td class="text-start">' . $valor->desc_plano . '</td>';
-                                echo '  <td class="text-start"> ' . $valor->desc_lanc . '</td>';
-                                echo '  <td>' . $this->dataBrasil($valor->data_venc) . '</td>';
-                                echo '  <td class="text-end">' . $this->moedaBrasil($valor->valor_lanc) . '</td>';
-                                echo '  <td class="text-start"> ' . $valor->desc_forma . '</td>';
-                                echo '  <td class="text-start"> ' . $valor->nome_banco . '</td>';
-                                echo '  <td class="text-start"> ' . $valor->nome_cartao . '</td>';
-                                echo '  <td>' . $this->dataBrasil($valor->data_rec_pag) . '</td>';
-                                echo '  <td>
-                                            <button type="button" class="btn btn-outline-info" title = "Alterar" data-bs-toggle="modal" data-bs-target="#alterar_lancamento' . $valor->id_lanc . '"><i class="bi bi-pencil"></i></button>
-                                            <button type="button" class="btn btn-outline-info" title = "Excluir" data-bs-toggle="modal" data-bs-target="#excluir_lancamento' . $valor->id_lanc . '"><i class="bi bi-trash"></i></button>
-                                        </td>';
-                                echo '</tr>';
-                            }
+                        <?php foreach($resultado as $lancamento): ?>
+                        <tr>
+                            <td class="column-hide"><?= $lancamento->id_lanc ?></td>
+                            <td><?= $lancamento->desc_tipo ?></td>
+                            <td><?= $lancamento->desc_plano ?></td>
+                            <td><?= $lancamento->desc_lanc ?></td>
+                            <td><?= $this->dataBrasil($lancamento->data_venc) ?></td>
+                            <td class="<?= $lancamento->desc_tipo == 'Receita' ? 'value-positive' : 'value-negative' ?>">
+                                <?= $this->moedaBrasil($lancamento->valor_lanc) ?>
+                            </td>
+                            <td><?= $lancamento->desc_forma ?></td>
+                            <td><?= $lancamento->nome_banco ?></td>
+                            <td class="column-hide"><?= $lancamento->nome_cartao ?></td>
+                            <td>
+                                <span class="status-badge <?= empty($lancamento->data_rec_pag) ? 'status-pending' : 'status-paid' ?>">
+                                    <?= empty($lancamento->data_rec_pag) ? 'Pendente' : $this->dataBrasil($lancamento->data_rec_pag) ?>
+                                </span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-primary btn-action" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#alterar_lancamento<?= $lancamento->id_lanc ?>">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-action" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#excluir_lancamento<?= $lancamento->id_lanc ?>">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <?php 
+                            $this->modal_alterar_lancamento(
+                                $lancamento->id_lanc,
+                                $lancamento->id_cad_tipo,
+                                $lancamento->id_cad_plano,
+                                $lancamento->desc_lanc,
+                                $lancamento->data_venc,
+                                $lancamento->valor_lanc,
+                                $lancamento->id_cad_forma,
+                                $lancamento->id_cad_banco,
+                                $lancamento->id_cad_cartao,
+                                $lancamento->data_rec_pag
+                            );
+                            $this->modal_excluir_lancamento($lancamento->id_lanc, $lancamento->desc_lanc);
                         ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php
-                //criar os Modais de excluir e alterar
-                foreach ($resultado as $key => $valor) {
-                    $this->modal_alterar_lancamento($valor->id_lanc, $valor->id_cad_tipo, $valor->id_cad_plano, $valor->desc_lanc, $valor->data_venc, $valor->valor_lanc, $valor->id_cad_forma, $valor->id_cad_banco, $valor->id_cad_cartao, $valor->data_rec_pag);
-                    
-                    $this->modal_excluir_lancamento($valor->id_lanc, $valor->desc_lanc);
-                    
-                }
-            ?>
-        </main>
-            <footer>
-                <!-- place footer here -->
-            </footer>
-            <!-- Bootstrap JavaScript Libraries -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
