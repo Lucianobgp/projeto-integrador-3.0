@@ -188,4 +188,4 @@ $canvas->page_text(20, 820, $dateString, $font, 9, [0,0,0]);
 $canvas->page_text(520, 820, "Página {PAGE_NUM} de {PAGE_COUNT}", $font, 9, [0,0,0]);
 
 // Exibe o PDF no navegador
-$dompdf->stream("relatorio_saldo_{$mesNome}_{$ano}.pdf", ["Attachment" => false]);
+$dompdf->stream("saldo_{$mesNome}_{$ano}.pdf", ["Attachment" => false]);

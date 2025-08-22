@@ -164,7 +164,7 @@ class Controller
 
     //==============================MOSTRAR MENU==============================
 
-    public function menu()
+public function menu()
 {
     $mesAtual = date("n"); // 1-12
     $anoAtual = date("Y");
@@ -251,13 +251,13 @@ class Controller
     echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
     echo '      </div>';
     echo '      <div class="modal-body">';
-    echo '        <form method="GET" action="relatorio_receitas.php" target="_blank">';
+    echo '        <form method="GET" action="relatorio_receitas.php" target="_blank" id="formReceitas">';
     echo '          <input type="hidden" name="consultar_editora" value="1">';
 
     // Select Meses
     echo '          <div class="form-group">';
-    echo '            <label for="mes">Mês</label>';
-    echo '            <select class="form-control" name="mes" id="mes">';
+    echo '            <label for="mes_receitas">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes_receitas">';
     $nomesMeses = [
         1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
         5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
@@ -272,8 +272,8 @@ class Controller
 
     // Input Ano
     echo '          <div class="form-group">';
-    echo '            <label for="ano">Ano</label>';
-    echo '            <input type="number" class="form-control" name="ano" id="ano" value="' . $anoAtual . '" required>';
+    echo '            <label for="ano_receitas">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano_receitas" value="' . $anoAtual . '" required>';
     echo '          </div>';
 
     echo '          <div class="modal-footer">';
@@ -310,13 +310,13 @@ class Controller
     echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
     echo '      </div>';
     echo '      <div class="modal-body">';
-    echo '        <form method="GET" action="relatorio_despesas.php" target="_blank">';
+    echo '        <form method="GET" action="relatorio_despesas.php" target="_blank" id="formDespesas">';
     echo '          <input type="hidden" name="consultar_editora" value="1">';
 
     // Select Meses
     echo '          <div class="form-group">';
-    echo '            <label for="mes">Mês</label>';
-    echo '            <select class="form-control" name="mes" id="mes">';
+    echo '            <label for="mes_despesas">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes_despesas">';
     $nomesMeses = [
         1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
         5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
@@ -331,8 +331,8 @@ class Controller
 
     // Input Ano
     echo '          <div class="form-group">';
-    echo '            <label for="ano">Ano</label>';
-    echo '            <input type="number" class="form-control" name="ano" id="ano" value="' . $anoAtual . '" required>';
+    echo '            <label for="ano_despesas">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano_despesas" value="' . $anoAtual . '" required>';
     echo '          </div>';
 
     echo '          <div class="modal-footer">';
@@ -369,13 +369,13 @@ class Controller
     echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
     echo '      </div>';
     echo '      <div class="modal-body">';
-    echo '        <form method="GET" action="relatorio_saldo.php" target="_blank">';
+    echo '        <form method="GET" action="relatorio_saldo.php" target="_blank" id="formSaldo">';
     echo '          <input type="hidden" name="consultar_editora" value="1">';
 
     // Select Meses
     echo '          <div class="form-group">';
-    echo '            <label for="mes">Mês</label>';
-    echo '            <select class="form-control" name="mes" id="mes">';
+    echo '            <label for="mes_saldo">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes_saldo">';
     $nomesMeses = [
         1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
         5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
@@ -390,8 +390,8 @@ class Controller
 
     // Input Ano
     echo '          <div class="form-group">';
-    echo '            <label for="ano">Ano</label>';
-    echo '            <input type="number" class="form-control" name="ano" id="ano" value="' . $anoAtual . '" required>';
+    echo '            <label for="ano_saldo">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano_saldo" value="' . $anoAtual . '" required>';
     echo '          </div>';
 
     echo '          <div class="modal-footer">';
@@ -417,6 +417,30 @@ class Controller
             background-color: #ede7f6 !important;
         }
     </style>';
+
+    // ============================= SCRIPT PARA LIMPAR MODAIS AO FECHAR =============================
+    echo '<script>
+        // Limpa os campos do formulário do modal de Recebimentos quando ele for fechado
+        var modalReceitas = document.getElementById("modalReceitasMes");
+        modalReceitas.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("mes_receitas").value = "' . $mesAtual . '";
+            document.getElementById("ano_receitas").value = "' . $anoAtual . '";
+        });
+
+        // Limpa os campos do formulário do modal de Pagamentos quando ele for fechado
+        var modalDespesas = document.getElementById("modalDespesasMes");
+        modalDespesas.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("mes_despesas").value = "' . $mesAtual . '";
+            document.getElementById("ano_despesas").value = "' . $anoAtual . '";
+        });
+
+        // Limpa os campos do formulário do modal de Saldo quando ele for fechado
+        var modalSaldo = document.getElementById("modalSaldoMes");
+        modalSaldo.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("mes_saldo").value = "' . $mesAtual . '";
+            document.getElementById("ano_saldo").value = "' . $anoAtual . '";
+        });
+    </script>';
 }
 
     //==============================MOSTRAR MENSAGEM==============================
