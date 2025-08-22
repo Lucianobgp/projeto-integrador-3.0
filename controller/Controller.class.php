@@ -218,9 +218,11 @@ class Controller
     echo '              <li class="nav-item dropdown">';
     echo '                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRel" role="button" data-bs-toggle="dropdown" aria-expanded="false">Relatórios</a>';
     echo '                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownRel">';
-    echo '                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalReceitasMes">Rec/Pag por mês/ano</a></li>';
-    echo '                      <li><a class="dropdown-item" href="index.php?inserir_editora">Despesas/mês</a></li>';
-    echo '                      <li><a class="dropdown-item" href="index.php?inserir_editora">Saldo/mês</a></li>';
+    echo '                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalReceitasMes">Recebimentos</a></li>';
+    echo '                      <hr class="text-white border border-2">';
+    echo '                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalDespesasMes">Pagamentos</a></li>';
+    echo '                      <hr class="text-white border border-2">';
+    echo '                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalSaldoMes">Saldo</a></li>';
     echo '                  </ul>';
     echo '              </li>';
     echo '          </ul>';
@@ -239,16 +241,135 @@ class Controller
     echo '  </div>';
     echo '</nav>';
 
+    //==============================MODAL RECEBIMENTO==============================
     // ---- MODAL Receitas/mês ----
     echo '<div class="modal fade" id="modalReceitasMes" tabindex="-1" aria-labelledby="modalReceitasMesLabel" aria-hidden="true">';
     echo '  <div class="modal-dialog">';
     echo '    <div class="modal-content modal-purple">';
     echo '      <div class="modal-header">';
-    echo '        <h5 class="modal-title" id="modalReceitasMesLabel">Relatório completo por mês e ano</h5>';
+    echo '        <h5 class="modal-title" id="modalReceitasMesLabel">Recebimentos por mês e ano</h5>';
     echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
     echo '      </div>';
     echo '      <div class="modal-body">';
     echo '        <form method="GET" action="relatorio_receitas.php" target="_blank">';
+    echo '          <input type="hidden" name="consultar_editora" value="1">';
+
+    // Select Meses
+    echo '          <div class="form-group">';
+    echo '            <label for="mes">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes">';
+    $nomesMeses = [
+        1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
+        5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
+        9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro",
+    ];
+    foreach ($nomesMeses as $num => $nome) {
+        $selected = ($num == $mesAtual) ? "selected" : "";
+        echo "<option value=\"$num\" $selected>$nome</option>";
+    }
+    echo '            </select>';
+    echo '          </div>';
+
+    // Input Ano
+    echo '          <div class="form-group">';
+    echo '            <label for="ano">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano" value="' . $anoAtual . '" required>';
+    echo '          </div>';
+
+    echo '          <div class="modal-footer">';
+    echo '            <button type="submit" class="btn btn-primary">Consultar</button>';
+    echo '            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>';
+    echo '          </div>';
+    echo '        </form>';
+    echo '      </div>';
+    echo '    </div>';
+    echo '  </div>';
+    echo '</div>';
+
+    // CSS direto
+    echo '<style>
+        .modal-content.modal-purple {
+            background-color: #f3e8ff !important; /* roxo clarinho */
+        }
+        .modal-content.modal-purple .modal-header {
+            background-color: #6f42c1 !important;
+            color: #fff !important;
+        }
+        .modal-content.modal-purple .modal-footer {
+            background-color: #ede7f6 !important;
+        }
+    </style>';
+
+    //==============================MODAL PAGAMENTO==============================
+    // ---- MODAL Despesas/mês ----
+    echo '<div class="modal fade" id="modalDespesasMes" tabindex="-1" aria-labelledby="modalDespesasMesLabel" aria-hidden="true">';
+    echo '  <div class="modal-dialog">';
+    echo '    <div class="modal-content modal-purple">';
+    echo '      <div class="modal-header">';
+    echo '        <h5 class="modal-title" id="modalDespesasMesLabel">Pagamentos por mês e ano</h5>';
+    echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+    echo '      </div>';
+    echo '      <div class="modal-body">';
+    echo '        <form method="GET" action="relatorio_despesas.php" target="_blank">';
+    echo '          <input type="hidden" name="consultar_editora" value="1">';
+
+    // Select Meses
+    echo '          <div class="form-group">';
+    echo '            <label for="mes">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes">';
+    $nomesMeses = [
+        1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
+        5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
+        9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro",
+    ];
+    foreach ($nomesMeses as $num => $nome) {
+        $selected = ($num == $mesAtual) ? "selected" : "";
+        echo "<option value=\"$num\" $selected>$nome</option>";
+    }
+    echo '            </select>';
+    echo '          </div>';
+
+    // Input Ano
+    echo '          <div class="form-group">';
+    echo '            <label for="ano">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano" value="' . $anoAtual . '" required>';
+    echo '          </div>';
+
+    echo '          <div class="modal-footer">';
+    echo '            <button type="submit" class="btn btn-primary">Consultar</button>';
+    echo '            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>';
+    echo '          </div>';
+    echo '        </form>';
+    echo '      </div>';
+    echo '    </div>';
+    echo '  </div>';
+    echo '</div>';
+
+    // CSS direto
+    echo '<style>
+        .modal-content.modal-purple {
+            background-color: #f3e8ff !important; /* roxo clarinho */
+        }
+        .modal-content.modal-purple .modal-header {
+            background-color: #6f42c1 !important;
+            color: #fff !important;
+        }
+        .modal-content.modal-purple .modal-footer {
+            background-color: #ede7f6 !important;
+        }
+    </style>';
+    
+    //==============================MODAL SALDO==============================
+    // ---- MODAL Saldo/mês ----
+    echo '<div class="modal fade" id="modalSaldoMes" tabindex="-1" aria-labelledby="modalSaldoMesLabel" aria-hidden="true">';
+    echo '  <div class="modal-dialog">';
+    echo '    <div class="modal-content modal-purple">';
+    echo '      <div class="modal-header">';
+    echo '        <h5 class="modal-title" id="modalSaldoMesLabel">Saldo por mês e ano</h5>';
+    echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+    echo '      </div>';
+    echo '      <div class="modal-body">';
+    echo '        <form method="GET" action="relatorio_saldo.php" target="_blank">';
     echo '          <input type="hidden" name="consultar_editora" value="1">';
 
     // Select Meses

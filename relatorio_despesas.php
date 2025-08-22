@@ -30,7 +30,7 @@ $mesNome = $nomesMeses[$mes];
 
 // Consulta ao banco de dados
 $sql = "SELECT desc_plano, desc_lanc, data_venc, valor_lanc
-        FROM view_recebimento_mes_ano_atual
+        FROM view_pagamento_mes_ano_atual
         WHERE MONTH(data_venc) = :mes
         AND YEAR(data_venc) = :ano
         ORDER BY data_venc ASC";
@@ -77,7 +77,7 @@ $html .= "<table class='header-table'>
                 <img src='{$logoSrc}' width='80' height='40' />
             </td>
             <td class='title-cell'>
-                <h2>Recebimentos do Mês de {$mesNome} de {$ano}</h2>
+                <h2>Pagamentos do Mês de {$mesNome} de {$ano}</h2>
             </td>
             </tr>
         </table>";
@@ -123,5 +123,5 @@ $canvas->page_text(20, 820, $dateString, $font, 9, [0,0,0]);
 $canvas->page_text(520, 820, "Página {PAGE_NUM} de {PAGE_COUNT}", $font, 9, [0,0,0]);
 
 // Exibe o PDF no navegador
-$dompdf->stream("recebimentos_{$mesNome}_{$ano}.pdf", ["Attachment" => false]);
+$dompdf->stream("Pagamentos_{$mesNome}_{$ano}.pdf", ["Attachment" => false]);
 ?>
