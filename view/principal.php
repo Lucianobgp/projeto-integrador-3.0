@@ -44,19 +44,19 @@
             <!-- Div 1 -->
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="p-4 border border-primary border-2 rounded shadow glass-effect">
-                    <h3>Valor dos recebimentos do mês e ano atual</h3>
+                    <h3><?php echo $this->viewReceita(); ?></h3>
                 </div>
             </div>
             <!-- Div 2 -->
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="p-4 border border-danger border-2 rounded shadow glass-effect">
-                    <h3>Valor dos pagamentos do mês e ano atual</h3>
+                    <h3><?php echo $this->viewDespesa(); ?></h3>
                 </div>
             </div>
             <!-- Div 3 -->
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="p-4 border border-success border-2 rounded shadow glass-effect">
-                    <h3>Valor do saldo do mês e ano atual</h3>
+                    <h3><?php echo $this->viewSaldo(); ?></h3>
                 </div>
             </div>
         </div>

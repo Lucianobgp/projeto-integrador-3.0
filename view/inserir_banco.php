@@ -19,14 +19,15 @@
             background: white;
         }
         .card-header {
-            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
+            background: #7c3aed;
             color: white;
             border-radius: 15px 15px 0 0 !important;
             padding: 1.5rem;
+            text-align: center;
         }
         .form-content {
             padding: 2rem;
-            background: #f8f9fa;
+            background: rgba(124, 58, 237, 0.07);
             border-radius: 10px;
             margin: 1.5rem;
         }
@@ -41,8 +42,12 @@
             border-color: #0061f2;
             box-shadow: 0 0 0 0.2rem rgba(0, 97, 242, 0.25);
         }
+        label.form-label {
+            color: #7c3aed;
+            font-weight: 500;
+        }
         .section-title {
-            color: #0061f2;
+            color: #7c3aed;
             font-weight: 600;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
@@ -55,13 +60,23 @@
             transition: all 0.3s;
         }
         .btn-save {
-            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
-            color: white;
+            background: #7c3aed;
+            color: #fff;
             border: none;
         }
         .btn-save:hover {
-            transform: translateY(-2px);
-            color: white;
+            background: #ffd700;
+            color: #7c3aed;
+        }
+        .btn-outline-secondary {
+            border: 1.5px solid #ffd700;
+            color: #fff;
+            background: #ffd700;
+        }
+        .btn-outline-secondary:hover {
+            background: #7c3aed;
+            color: #ffd700;
+            border-color: #7c3aed;
         }
     </style>
 </head>
@@ -69,7 +84,10 @@
     <div class="container form-container">
         <div class="card">
             <div class="card-header text-center">
-                <h4 class="mb-0"><i class="bi bi-bank"></i> Cadastro de Banco</h4>
+                <h4 class="mb-0">
+                    <i class="bi bi-bank" style="color: #ffd700;"></i>
+                    <span style="color: #ffd700; font-weight: bold;">Cadastro de Banco</span>
+                </h4>
             </div>
             
             <form method="post" action="index.php">

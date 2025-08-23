@@ -32,14 +32,15 @@
             background: white;
         }
         .card-header {
-            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
-            color: white;
+            background: #7c3aed !important;
+            color: #ffd700 !important;
             border-radius: 15px 15px 0 0 !important;
             padding: 1.5rem;
+            text-align: center;
         }
         .form-content {
             padding: 2rem;
-            background: #f8f9fa;
+            background: rgba(124, 58, 237, 0.07) !important;
             border-radius: 10px;
             margin: 1.5rem;
         }
@@ -55,11 +56,15 @@
             box-shadow: 0 0 0 0.2rem rgba(0, 97, 242, 0.25);
         }
         .section-title {
-            color: #0061f2;
+            color: #7c3aed;
             font-weight: 600;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #e0e5ec;
+        }
+        label.form-label {
+            color: #7c3aed;
+            font-weight: 500;
         }
         .btn-action {
             padding: 0.6rem 1.5rem;
@@ -68,13 +73,25 @@
             transition: all 0.3s;
         }
         .btn-save {
-            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
-            color: white;
-            border: none;
+            background: #6f42c1 !important;
+            color: #fff !important;
+            border: none !important;
+            transition: background 0.3s, color 0.3s;
         }
-        .btn-save:hover {
-            transform: translateY(-2px);
-            color: white;
+        .btn-save:hover, .btn-save:focus {
+            background: #ffd600 !important;
+            color: #6f42c1 !important;
+        }
+        .btn-outline-secondary {
+            border: 1.5px solid #ffd700 !important;
+            color: #6f42c1 !important;
+            background: #ffd700 !important;
+            transition: background 0.3s, color 0.3s;
+        }
+        .btn-outline-secondary:hover, .btn-outline-secondary:focus {
+            background: #6f42c1 !important;
+            color: #ffd700 !important;
+            border-color: #6f42c1 !important;
         }
     </style>
 </head>
@@ -83,7 +100,10 @@
         <div class="container form-container">
             <div class="card">
                 <div class="card-header text-center">
-                    <h4 class="mb-0"><i class="bi bi-list-check"></i> Cadastro de Plano de Contas</h4>
+                    <h4 class="mb-0">
+                        <i class="bi bi-list-check" style="color: #ffd700;"></i>
+                        <span style="color: #ffd700; font-weight: bold;">Cadastro de Plano de Contas</span>
+                    </h4>
                 </div>
                 
                 <form method="post" action="index.php">

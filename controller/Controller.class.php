@@ -223,7 +223,7 @@ class Controller
         echo '                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i>' . $_SESSION['email'];
         echo '                  </a>';
         echo '                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">';
-        echo '                      <li><a class="dropdown-item" href="index.php?sair"><i class="bi bi-box-arrow-right"></i> Sair</a></li>';
+        echo '                      <li><a class="dropdown-item" href="login.php?sair"><i class="bi bi-box-arrow-right"></i> Sair</a></li>';
         echo '                  </ul>';
         echo '              </li>';
         echo '          </ul>';
@@ -1553,5 +1553,44 @@ class Controller
         echo '</div>';
         echo '</div>';
         echo '</div>';
+    }
+
+    public function viewReceita()
+    {
+        //instanciar a classe Saldo
+        $objLancamento = new Lancamento();
+        //invocar o método
+        $resultado = $objLancamento->viewReceita();
+        foreach ($resultado as $total_recebimento) {
+            $recebimentoMes = 'Receitas Mês Atual <br><br> R$ ' . number_format($total_recebimento->total_recebimento, 2, ',', '.');
+        }
+
+        return $recebimentoMes;
+    }
+
+        public function viewDespesa()
+    {
+        //instanciar a classe Saldo
+        $objLancamento = new Lancamento();
+        //invocar o método
+        $resultado = $objLancamento->viewDespesa();
+        foreach ($resultado as $total_pagamento) {
+            $pagamentoMes = 'Despesas Mês Atual <br><br> R$ ' . number_format($total_pagamento->total_pagamento, 2, ',', '.');
+        }
+
+        return $pagamentoMes;
+    }
+
+    public function viewSaldo()
+    {
+        //instanciar a classe Saldo
+        $objLancamento = new Lancamento();
+        //invocar o método
+        $resultado = $objLancamento->viewSaldo();
+        foreach ($resultado as $saldo) {
+            $saldoMes = 'Saldo Mês Atual <br><br> R$ ' . number_format($saldo->saldo, 2, ',', '.');
+        }
+
+        return $saldoMes;
     }
 }

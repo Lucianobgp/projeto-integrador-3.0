@@ -315,4 +315,82 @@ class Lancamento extends Conexao
             return false;
         }
     }
+
+    //metodo view receita
+    public function viewReceita()
+    {
+
+        //montar query
+        $sql = " SELECT * FROM db_financaspi.view_recebimento_soma_mes_ano_atual; ";
+
+        //executa a query
+        try {
+            //conectar com o banco
+            $bd = $this->conectar();
+            //preparar o sql
+            $query = $bd->prepare($sql);
+
+            //excutar a query
+            $query->execute();
+            //retorna o resultado
+            $resultado = $query->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+
+        } catch (PDOException $e) {
+            //print "Erro ao consultar";
+            return false;
+        }
+    }
+
+        //metodo view despesa
+    public function viewDespesa()
+    {
+
+        //montar query
+        $sql = " SELECT * FROM db_financaspi.view_pagamento_soma_mes_ano_atual; ";
+
+        //executa a query
+        try {
+            //conectar com o banco
+            $bd = $this->conectar();
+            //preparar o sql
+            $query = $bd->prepare($sql);
+
+            //excutar a query
+            $query->execute();
+            //retorna o resultado
+            $resultado = $query->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+
+        } catch (PDOException $e) {
+            //print "Erro ao consultar";
+            return false;
+        }
+    }
+
+    //metodo view saldo
+    public function viewSaldo()
+    {
+
+        //montar query
+        $sql = " SELECT * FROM db_financaspi.view_saldo_mes_ano_atual ";
+
+        //executa a query
+        try {
+            //conectar com o banco
+            $bd = $this->conectar();
+            //preparar o sql
+            $query = $bd->prepare($sql);
+
+            //excutar a query
+            $query->execute();
+            //retorna o resultado
+            $resultado = $query->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+
+        } catch (PDOException $e) {
+            //print "Erro ao consultar";
+            return false;
+        }
+    }
 }

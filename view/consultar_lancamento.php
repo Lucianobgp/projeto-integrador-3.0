@@ -24,11 +24,12 @@
             background: white;
         }
 
-        .card-header {
-            background: linear-gradient(135deg, #0061f2 0%, #6900f2 100%);
-            color: white;
-            border-radius: 15px 15px 0 0 !important;
-            padding: 1.5rem;
+        .card-header { 
+            background: #7c3aed !important; 
+            color: #ffd700 !important; 
+            border-radius: 15px 15px 0 0 !important; 
+            padding: 1.5rem; 
+            text-align: center; 
         }
 
         .table-responsive {
@@ -40,14 +41,11 @@
             vertical-align: middle;
         }
 
-        .table thead th {
-            background: #f8f9fa;
-            border-bottom: 2px solid #e0e5ec;
-            color: #6c757d;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            padding: 1rem;
+        .search-box { 
+            padding: 1rem; 
+            background: rgba(124, 58, 237, 0.07) !important; 
+            border-radius: 10px; 
+            margin: 1rem; 
         }
 
         .table tbody td {
@@ -102,11 +100,14 @@
             transition: all 0.3s;
         }
 
-        .search-box {
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin: 1rem;
+        .table thead th { 
+            background: #f8f9fa !important; 
+            border-bottom: 2px solid #e0e5ec !important; 
+            color: #7c3aed !important; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: 0.85rem; 
+            padding: 1rem; 
         }
 
         @media (max-width: 768px) {
@@ -119,13 +120,28 @@
                 font-size: 0.8rem;
             }
         }
+        /* Botão Pesquisar estilo roxo/amarelo */
+        .btn-pesquisar {
+            background: #6f42c1 !important;
+            color: #fff !important;
+            border: none !important;
+            transition: background 0.3s, color 0.3s;
+        }
+        .btn-pesquisar:hover, .btn-pesquisar:focus {
+            background: #ffd600 !important;
+            color: #6f42c1 !important;
+            border: none !important;
+        }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
         <div class="card">
             <div class="card-header text-center">
-                <h4 class="mb-0"><i class="bi bi-list-check"></i> Consulta de Lançamentos</h4>
+                    <h4 class="mb-0"> 
+                        <i class="bi bi-list-check" style="color: #ffd700;"></i> 
+                        <span style="color: #ffd700; font-weight: bold;">Consulta de Lançamentos</span> 
+                    </h4>
             </div>
 
             <!-- Área de Pesquisa -->
@@ -136,7 +152,7 @@
                                placeholder="Pesquisar lançamentos...">
                     </div>
                     <div class="col-md-4">
-                        <button type="submit" name="consultar_lancamento" class="btn btn-primary w-100">
+                        <button type="submit" name="consultar_lancamento" class="btn btn-pesquisar w-100">
                             <i class="bi bi-search"></i> Pesquisar
                         </button>
                     </div>
