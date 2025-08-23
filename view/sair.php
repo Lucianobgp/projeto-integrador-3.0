@@ -6,4 +6,4 @@ unset($_SESSION['perfil']);
 unset($_SESSION['resultado']);
 
 //redirecionar para o login
-header("location: index.php");
+header("location: login.php");

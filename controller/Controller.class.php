@@ -223,7 +223,7 @@ class Controller
         echo '                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i>' . $_SESSION['email'];
         echo '                  </a>';
         echo '                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">';
-        echo '                      <li><a class="dropdown-item" href="login.php?sair"><i class="bi bi-box-arrow-right"></i> Sair</a></li>';
+        echo '                      <li><a class="dropdown-item" href="index.php?sair"><i class="bi bi-box-arrow-right"></i> Sair</a></li>';
         echo '                  </ul>';
         echo '              </li>';
         echo '          </ul>';
@@ -246,7 +246,7 @@ class Controller
         echo '      </div>';
         echo '      <div class="modal-body">';
         echo '        <div class="alert alert-warning" role="alert">';
-        echo            $mensagem;
+        echo $mensagem;
         echo '        </div>';
         echo '      </div>';
         echo '      <div class="modal-footer">';
@@ -276,7 +276,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objBanco->consultarBanco(null);
             //incluir a view
             include_once 'view/consultar_banco.php';
@@ -331,7 +331,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objBanco->consultarBanco(null);
             //incluir a view
             include_once 'view/consultar_banco.php';
@@ -519,7 +519,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objBandeira->consultarBandeira(null);
             //incluir a view
             include_once 'view/consultar_bandeira.php';
@@ -597,7 +597,7 @@ class Controller
         echo '      </div>';
         echo '<form method="post" action="index.php">';
         echo '  <div class="modal-body">';
-        echo'       <label for="nome_band" class="form-label">Bandeira do cartão:</label>';
+        echo '       <label for="nome_band" class="form-label">Bandeira do cartão:</label>';
         echo '      <input type="text" class="form-control" name="nome_band" value="' . $nome_band . '">';
         echo '  </div>';
         echo '  <div class="modal-footer">';
@@ -648,7 +648,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objCartao->consultarCartao(null);
             //incluir a view
             include_once 'view/consultar_cartao.php';
@@ -703,7 +703,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objCartao->consultarCartao(null);
             //incluir a view
             include_once 'view/consultar_cartao.php';
@@ -890,7 +890,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objForma->consultarForma(null);
             //incluir a view
             include_once 'view/consultar_forma.php';
@@ -1019,7 +1019,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objLancamento->consultarLancamento(null);
             //incluir a view
             include_once 'view/consultar_lancamento.php';
@@ -1074,7 +1074,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objLancamento->consultarLancamento(null);
             //incluir a view
             include_once 'view/consultar_lancamento.php';
@@ -1248,7 +1248,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objPlano->consultarPlano(null);
             //incluir a view
             include_once 'view/consultar_plano.php';
@@ -1400,7 +1400,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objUsuario->consultarUsuario(null);
             //incluir a view
             include_once 'view/consultar_usuario.php';
@@ -1455,7 +1455,7 @@ class Controller
             //iniciar sessao
             session_start();
             //inserir menu
-            $menu = $this->menu();
+            $menu      = $this->menu();
             $resultado = $objUsuario->consultarUsuario(null);
             //incluir a view
             include_once 'view/consultar_usuario.php';
