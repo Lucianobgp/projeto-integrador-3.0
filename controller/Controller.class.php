@@ -166,70 +166,281 @@ class Controller
 
     public function menu()
     {
-        echo '<nav class="navbar navbar-expand-lg custom-navbar">'; //fixar o menu ao topo => fixed-top
-        echo '  <div class="container-fluid">';
-        echo '      <a class="navbar-brand mx-auto fs-4" href="#">SFP-GZ</a>';
-        echo '      <button class="navbar-toggler text-white" style="background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">';
-        echo '      <span class="navbar-toggler-icon"></span>';
-        echo '      </button>';
-        echo '      <div class="collapse navbar-collapse" id="navbarResponsive">';
-        echo '          <ul class="navbar-nav mx-auto fs-5">';
-        //Principal
-        echo '              <li class="nav-item">';
-        echo '                  <a class="nav-link" href="index.php?principal">Dashboard</a>';
-        echo '              </li>';
-        //Lançamentos
-        echo '              <li class="nav-item">';
-        echo '                  <a class="nav-link" href="index.php?inserir_lancamento">Lançamentos</a>';
-        echo '              </li>';
-        //Cadastros
-        echo '              <li class="nav-item dropdown">';
-        echo '                  <a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cadastros</a>';
-        echo '                  <ul class="dropdown-menu">';
-        echo '                      <li><a href="index.php?inserir_banco" class="dropdown-item">Bancos</a></li>';
-        echo '                      <li><a href="index.php?inserir_bandeira" class="dropdown-item">Bandeiras de cartões</a></li>';
-        echo '                      <li><a href="index.php?inserir_cartao" class="dropdown-item">Cartões</a></li>';
-        echo '                      <li><a href="index.php?inserir_forma" class="dropdown-item">Formas de rec/pag</a></li>';
-        echo '                      <li><a href="index.php?inserir_plano" class="dropdown-item">Plano de contas</a></li>';
-        echo '                  </ul>';
-        echo '              </li>';
-        //Consultas
-        echo '              <li class="nav-item dropdown">';
-        echo '                  <a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Consultas</a>';
-        echo '                  <ul class="dropdown-menu">';
-        echo '                      <li><a href="index.php?consultar_lancamento" class="dropdown-item">Lançamentos</a></li>';
-        echo '                      <hr class="text-white border border-2">';
-        echo '                      <li><a href="index.php?consultar_banco" class="dropdown-item">Bancos</a></li>';
-        echo '                      <li><a href="index.php?consultar_bandeira" class="dropdown-item">Bandeiras de cartões</a></li>';
-        echo '                      <li><a href="index.php?consultar_cartao" class="dropdown-item">Cartões</a></li>';
-        echo '                      <li><a href="index.php?consultar_forma" class="dropdown-item">Formas de rec/pag</a></li>';
-        echo '                      <li><a href="index.php?consultar_plano" class="dropdown-item">Plano de contas</a></li>';
-        echo '                  </ul>';
-        echo '              </li>';
-        //Relatórios
-        echo '              <li class="nav-item dropdown">';
-        echo '                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Relatórios';
-        echo '                  </a>';
-        echo '                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">';
-        echo '                      <li><a class="dropdown-item" href="index.php?consultar_editora">Receitas/mês</a></li>';
-        echo '                      <li><a class="dropdown-item" href="index.php?inserir_editora">Despesas/mês</a></li>';
-        echo '                      <li><a class="dropdown-item" href="index.php?inserir_editora">Saldo/mês</a></li>';
-        echo '                  </ul>';
-        echo '              </li>';
-        echo '          </ul>';
-        echo '          <ul class="navbar-nav fs-5">';
-        //Sair
-        echo '              <li class="nav-item dropdown">';
-        echo '                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i>' . $_SESSION['email'];
-        echo '                  </a>';
-        echo '                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">';
-        echo '                      <li><a class="dropdown-item" href="index.php?sair"><i class="bi bi-box-arrow-right"></i> Sair</a></li>';
-        echo '                  </ul>';
-        echo '              </li>';
-        echo '          </ul>';
-        echo '      </div>';
-        echo '  </div>';
-        echo '</nav>';
+        $mesAtual = date("n"); // 1-12
+    $anoAtual = date("Y");
+
+    echo '<nav class="navbar navbar-expand-lg custom-navbar">'; 
+    echo '  <div class="container-fluid">';
+    echo '      <a class="navbar-brand mx-auto fs-4" href="#">SFP-GZ</a>';
+    echo '      <button class="navbar-toggler text-white" style="background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">';
+    echo '          <span class="navbar-toggler-icon"></span>';
+    echo '      </button>';
+    echo '      <div class="collapse navbar-collapse" id="navbarResponsive">';
+    echo '          <ul class="navbar-nav mx-auto fs-5">';
+    
+    // Principal
+    echo '              <li class="nav-item">';
+    echo '                  <a class="nav-link" href="index.php?principal">Dashboard</a>';
+    echo '              </li>';
+
+    // Lançamentos
+    echo '              <li class="nav-item">';
+    echo '                  <a class="nav-link" href="index.php?inserir_lancamento">Lançamentos</a>';
+    echo '              </li>';
+
+    // Cadastros
+    echo '              <li class="nav-item dropdown">';
+    echo '                  <a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" id="navbarDropdownCad" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cadastros</a>';
+    echo '                  <ul class="dropdown-menu">';
+    echo '                      <li><a href="index.php?inserir_banco" class="dropdown-item">Bancos</a></li>';
+    echo '                      <li><a href="index.php?inserir_bandeira" class="dropdown-item">Bandeiras de cartões</a></li>';
+    echo '                      <li><a href="index.php?inserir_cartao" class="dropdown-item">Cartões</a></li>';
+    echo '                      <li><a href="index.php?inserir_forma" class="dropdown-item">Formas de rec/pag</a></li>';
+    echo '                      <li><a href="index.php?inserir_plano" class="dropdown-item">Plano de contas</a></li>';
+    echo '                  </ul>';
+    echo '              </li>';
+
+    // Consultas
+    echo '              <li class="nav-item dropdown">';
+    echo '                  <a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" id="navbarDropdownCons" role="button" data-bs-toggle="dropdown" aria-expanded="false">Consultas</a>';
+    echo '                  <ul class="dropdown-menu">';
+    echo '                      <li><a href="index.php?consultar_lancamento" class="dropdown-item">Lançamentos</a></li>';
+    echo '                      <hr class="text-white border border-2">';
+    echo '                      <li><a href="index.php?consultar_banco" class="dropdown-item">Bancos</a></li>';
+    echo '                      <li><a href="index.php?consultar_bandeira" class="dropdown-item">Bandeiras de cartões</a></li>';
+    echo '                      <li><a href="index.php?consultar_cartao" class="dropdown-item">Cartões</a></li>';
+    echo '                      <li><a href="index.php?consultar_forma" class="dropdown-item">Formas de rec/pag</a></li>';
+    echo '                      <li><a href="index.php?consultar_plano" class="dropdown-item">Plano de contas</a></li>';
+    echo '                  </ul>';
+    echo '              </li>';
+
+    // Relatórios
+    echo '              <li class="nav-item dropdown">';
+    echo '                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRel" role="button" data-bs-toggle="dropdown" aria-expanded="false">Relatórios</a>';
+    echo '                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownRel">';
+    echo '                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalReceitasMes">Recebimentos</a></li>';
+    echo '                      <hr class="text-white border border-2">';
+    echo '                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalDespesasMes">Pagamentos</a></li>';
+    echo '                      <hr class="text-white border border-2">';
+    echo '                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalSaldoMes">Saldo</a></li>';
+    echo '                  </ul>';
+    echo '              </li>';
+    echo '          </ul>';
+
+    // Usuário
+    echo '          <ul class="navbar-nav fs-5">';
+    echo '              <li class="nav-item dropdown">';
+    echo '                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> ' . $_SESSION['email'] . '</a>';
+    echo '                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUser">';
+    echo '                      <li><a class="dropdown-item" href="login.php?sair"><i class="bi bi-box-arrow-right"></i> Sair</a></li>';
+    echo '                  </ul>';
+    echo '              </li>';
+    echo '          </ul>';
+
+    echo '      </div>';
+    echo '  </div>';
+    echo '</nav>';
+
+    //==============================MODAL RECEBIMENTO==============================
+    // ---- MODAL Receitas/mês ----
+    echo '<div class="modal fade" id="modalReceitasMes" tabindex="-1" aria-labelledby="modalReceitasMesLabel" aria-hidden="true">';
+    echo '  <div class="modal-dialog">';
+    echo '    <div class="modal-content modal-purple">';
+    echo '      <div class="modal-header">';
+    echo '        <h5 class="modal-title" id="modalReceitasMesLabel">Recebimentos por mês e ano</h5>';
+    echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+    echo '      </div>';
+    echo '      <div class="modal-body">';
+    echo '        <form method="GET" action="relatorio_receitas.php" target="_blank" id="formReceitas">';
+    echo '          <input type="hidden" name="consultar_editora" value="1">';
+
+    // Select Meses
+    echo '          <div class="form-group">';
+    echo '            <label for="mes_receitas">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes_receitas">';
+    $nomesMeses = [
+        1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
+        5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
+        9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro",
+    ];
+    foreach ($nomesMeses as $num => $nome) {
+        $selected = ($num == $mesAtual) ? "selected" : "";
+        echo "<option value=\"$num\" $selected>$nome</option>";
+    }
+    echo '            </select>';
+    echo '          </div>';
+
+    // Input Ano
+    echo '          <div class="form-group">';
+    echo '            <label for="ano_receitas">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano_receitas" value="' . $anoAtual . '" required>';
+    echo '          </div>';
+
+    echo '          <div class="modal-footer">';
+    echo '            <button type="submit" class="btn btn-primary">Consultar</button>';
+    echo '            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>';
+    echo '          </div>';
+    echo '        </form>';
+    echo '      </div>';
+    echo '    </div>';
+    echo '  </div>';
+    echo '</div>';
+
+    // CSS direto
+    echo '<style>
+        .modal-content.modal-purple {
+            background-color: #f3e8ff !important; /* roxo clarinho */
+        }
+        .modal-content.modal-purple .modal-header {
+            background-color: #6f42c1 !important;
+            color: #fff !important;
+        }
+        .modal-content.modal-purple .modal-footer {
+            background-color: #ede7f6 !important;
+        }
+    </style>';
+
+    //==============================MODAL PAGAMENTO==============================
+    // ---- MODAL Despesas/mês ----
+    echo '<div class="modal fade" id="modalDespesasMes" tabindex="-1" aria-labelledby="modalDespesasMesLabel" aria-hidden="true">';
+    echo '  <div class="modal-dialog">';
+    echo '    <div class="modal-content modal-purple">';
+    echo '      <div class="modal-header">';
+    echo '        <h5 class="modal-title" id="modalDespesasMesLabel">Pagamentos por mês e ano</h5>';
+    echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+    echo '      </div>';
+    echo '      <div class="modal-body">';
+    echo '        <form method="GET" action="relatorio_despesas.php" target="_blank" id="formDespesas">';
+    echo '          <input type="hidden" name="consultar_editora" value="1">';
+
+    // Select Meses
+    echo '          <div class="form-group">';
+    echo '            <label for="mes_despesas">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes_despesas">';
+    $nomesMeses = [
+        1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
+        5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
+        9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro",
+    ];
+    foreach ($nomesMeses as $num => $nome) {
+        $selected = ($num == $mesAtual) ? "selected" : "";
+        echo "<option value=\"$num\" $selected>$nome</option>";
+    }
+    echo '            </select>';
+    echo '          </div>';
+
+    // Input Ano
+    echo '          <div class="form-group">';
+    echo '            <label for="ano_despesas">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano_despesas" value="' . $anoAtual . '" required>';
+    echo '          </div>';
+
+    echo '          <div class="modal-footer">';
+    echo '            <button type="submit" class="btn btn-primary">Consultar</button>';
+    echo '            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>';
+    echo '          </div>';
+    echo '        </form>';
+    echo '      </div>';
+    echo '    </div>';
+    echo '  </div>';
+    echo '</div>';
+
+    // CSS direto
+    echo '<style>
+        .modal-content.modal-purple {
+            background-color: #f3e8ff !important; /* roxo clarinho */
+        }
+        .modal-content.modal-purple .modal-header {
+            background-color: #6f42c1 !important;
+            color: #fff !important;
+        }
+        .modal-content.modal-purple .modal-footer {
+            background-color: #ede7f6 !important;
+        }
+    </style>';
+    
+    //==============================MODAL SALDO==============================
+    // ---- MODAL Saldo/mês ----
+    echo '<div class="modal fade" id="modalSaldoMes" tabindex="-1" aria-labelledby="modalSaldoMesLabel" aria-hidden="true">';
+    echo '  <div class="modal-dialog">';
+    echo '    <div class="modal-content modal-purple">';
+    echo '      <div class="modal-header">';
+    echo '        <h5 class="modal-title" id="modalSaldoMesLabel">Saldo por mês e ano</h5>';
+    echo '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+    echo '      </div>';
+    echo '      <div class="modal-body">';
+    echo '        <form method="GET" action="relatorio_saldo.php" target="_blank" id="formSaldo">';
+    echo '          <input type="hidden" name="consultar_editora" value="1">';
+
+    // Select Meses
+    echo '          <div class="form-group">';
+    echo '            <label for="mes_saldo">Mês</label>';
+    echo '            <select class="form-control" name="mes" id="mes_saldo">';
+    $nomesMeses = [
+        1 => "Janeiro", 2 => "Fevereiro", 3 => "Março", 4 => "Abril",
+        5 => "Maio", 6 => "Junho", 7 => "Julho", 8 => "Agosto",
+        9 => "Setembro", 10 => "Outubro", 11 => "Novembro", 12 => "Dezembro",
+    ];
+    foreach ($nomesMeses as $num => $nome) {
+        $selected = ($num == $mesAtual) ? "selected" : "";
+        echo "<option value=\"$num\" $selected>$nome</option>";
+    }
+    echo '            </select>';
+    echo '          </div>';
+
+    // Input Ano
+    echo '          <div class="form-group">';
+    echo '            <label for="ano_saldo">Ano</label>';
+    echo '            <input type="number" class="form-control" name="ano" id="ano_saldo" value="' . $anoAtual . '" required>';
+    echo '          </div>';
+
+    echo '          <div class="modal-footer">';
+    echo '            <button type="submit" class="btn btn-primary">Consultar</button>';
+    echo '            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>';
+    echo '          </div>';
+    echo '        </form>';
+    echo '      </div>';
+    echo '    </div>';
+    echo '  </div>';
+    echo '</div>';
+
+    // CSS direto
+    echo '<style>
+        .modal-content.modal-purple {
+            background-color: #f3e8ff !important; /* roxo clarinho */
+        }
+        .modal-content.modal-purple .modal-header {
+            background-color: #6f42c1 !important;
+            color: #fff !important;
+        }
+        .modal-content.modal-purple .modal-footer {
+            background-color: #ede7f6 !important;
+        }
+    </style>';
+
+    // ============================= SCRIPT PARA LIMPAR MODAIS AO FECHAR =============================
+    echo '<script>
+        // Limpa os campos do formulário do modal de Recebimentos quando ele for fechado
+        var modalReceitas = document.getElementById("modalReceitasMes");
+        modalReceitas.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("mes_receitas").value = "' . $mesAtual . '";
+            document.getElementById("ano_receitas").value = "' . $anoAtual . '";
+        });
+
+        // Limpa os campos do formulário do modal de Pagamentos quando ele for fechado
+        var modalDespesas = document.getElementById("modalDespesasMes");
+        modalDespesas.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("mes_despesas").value = "' . $mesAtual . '";
+            document.getElementById("ano_despesas").value = "' . $anoAtual . '";
+        });
+
+        // Limpa os campos do formulário do modal de Saldo quando ele for fechado
+        var modalSaldo = document.getElementById("modalSaldoMes");
+        modalSaldo.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("mes_saldo").value = "' . $mesAtual . '";
+            document.getElementById("ano_saldo").value = "' . $anoAtual . '";
+        });
+    </script>';
     }
 
     //==============================MOSTRAR MENSAGEM==============================
