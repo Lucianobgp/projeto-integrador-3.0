@@ -393,4 +393,32 @@ class Lancamento extends Conexao
             return false;
         }
     }
+
+    // Retorna array de receitas agrupadas por mês do ano atual
+    public function getReceitasPorMesAnoAtual() {
+        $sql = "SELECT MONTH(data_venc) as mes, SUM(valor_lanc) as total FROM db_financaspi.tb_lancamento WHERE id_cad_tipo = 1 AND YEAR(data_venc) = YEAR(CURDATE()) GROUP BY mes ORDER BY mes";
+        try {
+            $bd = $this->conectar();
+            $query = $bd->prepare($sql);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // Retorna array de despesas agrupadas por mês do ano atual
+    public function getDespesasPorMesAnoAtual() {
+        $sql = "SELECT MONTH(data_venc) as mes, SUM(valor_lanc) as total FROM db_financaspi.tb_lancamento WHERE id_cad_tipo = 2 AND YEAR(data_venc) = YEAR(CURDATE()) GROUP BY mes ORDER BY mes";
+        try {
+            $bd = $this->conectar();
+            $query = $bd->prepare($sql);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_OBJ);
+            return $resultado;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

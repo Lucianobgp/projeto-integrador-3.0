@@ -1,71 +1,185 @@
 <!doctype html>
 <html lang="pt-br">
     <head>
-        <title>Tela principal</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <!-- Bootstrap CSS v5.3.3 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-        <!-- CSS -->
-        <link rel="stylesheet" href="static/style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard - SFP-GZ</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
-    /* Adicionar um efeito de vidro ao fundo das divs */
-    .glass-effect {
-        background: rgba(255, 255, 255, 0.2); /* Fundo semi-transparente */
-        backdrop-filter: blur(8px); /* Aplica o desfoque ao fundo */
-        -webkit-backdrop-filter: blur(8px); /* Compatibilidade com navegadores WebKit */
-        border: 1px solid rgba(255, 255, 255, 0.3); /* Borda semi-transparente */
-        border-radius: 10px; /* Bordas arredondadas */
-    }
+            .dashboard-card {
+                background: #f3e8ff;
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(111,66,193,0.08);
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+                position: relative;
+                z-index: 2;
+            }
+            .dashboard-title {
+                color: #7c3aed;
+                font-weight: bold;
+                letter-spacing: 2px;
+            }
 
-    /* Ajustar fundo da página para destacar o efeito */
-    body {
-        background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
-        background-size: cover;
-    }
-</style>
+            /* Adicionar um efeito de vidro ao fundo das divs */
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.85); /* Menos transparência para não sumir atrás do fundo */
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 10px;
+                position: relative;
+                z-index: 2;
+            }
+
+            /* Ajustar fundo da página para destacar o efeito */
+            body {
+                background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
+                background-size: cover;
+            }
+        </style>
     </head>
-
     <body class="vh-100" style="background: url('images/finanças_pessoais.jpeg') no-repeat center center; background-size: cover;">
+        <?php
+        require_once dirname(__DIR__) . '/model/Lancamento.class.php';
+        $lancamento = new Lancamento();
+        $receitasPorMes = $lancamento->getReceitasPorMesAnoAtual();
+        $despesasPorMes = $lancamento->getDespesasPorMesAnoAtual();
+        $receitas = array_fill(0, 12, 0);
+        $despesas = array_fill(0, 12, 0);
+        if ($receitasPorMes) {
+            foreach ($receitasPorMes as $item) {
+                $receitas[$item->mes - 1] = (float)$item->total;
+            }
+        }
+        if ($despesasPorMes) {
+            foreach ($despesasPorMes as $item) {
+                $despesas[$item->mes - 1] = (float)$item->total;
+            }
+        }
+        ?>
         <header>
             <!-- place navbar here -->
             <?php echo $menu ?>
         </header>
         <main>
-        <div class="container my-5">
-        <div class="row text-center text-white">
-            <!-- Div 1 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <div class="p-4 border border-primary border-2 rounded shadow glass-effect">
-                    <h3><?php echo $this->viewReceita(); ?></h3>
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <!-- Título removido -->
+                            <p class="fs-3 text-success"><?php echo $this->viewReceita(); ?></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <!-- Título removido -->
+                            <p class="fs-3 text-danger"><?php echo $this->viewDespesa(); ?></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card glass-effect text-center">
+                            <!-- Título removido -->
+                            <p class="fs-3 text-primary">
+                                <?php 
+                                require_once dirname(__DIR__) . '/controller/Controller.class.php';
+                                $controller = new Controller();
+                                echo $controller->viewSaldo(); 
+                                ?>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- Div 2 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <div class="p-4 border border-danger border-2 rounded shadow glass-effect">
-                    <h3><?php echo $this->viewDespesa(); ?></h3>
-                </div>
-            </div>
-            <!-- Div 3 -->
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <div class="p-4 border border-success border-2 rounded shadow glass-effect">
-                    <h3><?php echo $this->viewSaldo(); ?></h3>
-                </div>
-            </div>
+    <div class="dashboard-card" style="width: 50%; margin-left: 0; margin-right: auto;">
+            <h5 class="mb-3">Comparativo Mensal: Receitas x Despesas</h5>
+            <canvas id="graficoFinanceiro" height="120"></canvas>
         </div>
+
+    <!-- Card moderno: Saldo acumulado de cada mês -->
+    <div class="dashboard-card" style="width: 50%; margin-left: 0; margin-right: auto;">
+        <h5 class="mb-3">Saldo Acumulado por Mês</h5>
+        <canvas id="graficoSaldoAcumulado" height="120"></canvas>
+
     </div>
+            </div>
         </main>
         <footer>
             <!-- place footer here -->
         </footer>
         <!-- Bootstrap JavaScript Libraries -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+            const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+            const receitas = <?php echo json_encode($receitas); ?>;
+            const despesas = <?php echo json_encode($despesas); ?>;
+            const ctx = document.getElementById('graficoFinanceiro').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: meses,
+                    datasets: [
+                        {
+                            label: 'Receitas',
+                            data: receitas,
+                            backgroundColor: '#7c3aed',
+                        },
+                        {
+                            label: 'Despesas',
+                            data: despesas,
+                            backgroundColor: '#e53e3e',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Saldo acumulado por mês
+            const saldoAcumulado = meses.map((_, i) => {
+                let saldo = 0;
+                for (let j = 0; j <= i; j++) {
+                    saldo += (receitas[j] || 0) - (despesas[j] || 0);
+                }
+                return saldo;
+            });
+            const ctxSaldo = document.getElementById('graficoSaldoAcumulado').getContext('2d');
+            new Chart(ctxSaldo, {
+                type: 'line',
+                data: {
+                    labels: meses,
+                    datasets: [{
+                        label: 'Saldo Acumulado',
+                        data: saldoAcumulado,
+                        fill: true,
+                        backgroundColor: 'rgba(124,58,237,0.15)',
+                        borderColor: '#7c3aed',
+                        tension: 0.4,
+                        pointBackgroundColor: '#7c3aed',
+                        pointBorderColor: '#fff',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        </script>
     </body>
 </html>
