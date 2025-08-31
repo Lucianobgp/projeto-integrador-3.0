@@ -265,7 +265,7 @@ class Controller
         // CSS direto
         echo '<style>
             .custom-sidebar {
-                background-color: #7c3aed; /* cor sólida igual às tabelas */
+                background-color: #4B2673; /* cor sólida igual ao restante do sistema */
                 color: #fff;
                 width: 260px;
                 min-height: 100vh;

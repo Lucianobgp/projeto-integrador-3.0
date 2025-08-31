@@ -1,3 +1,5 @@
+<body class="vh-100">
+    <body class="vh-100">
 <!doctype html>
 <html lang="pt-br">
     <head>
@@ -5,42 +7,104 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard - SFP-GZ</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
         <style>
+            body {
+                background: #f7f7fa;
+                min-height: 100vh;
+            }
+            .sidebar {
+                background: #4B2673;
+                color: #fff;
+                min-height: 100vh;
+                padding-top: 2rem;
+                font-family: 'Segoe UI', Arial, sans-serif;
+            }
+            .sidebar .nav-link, .sidebar .nav-link:visited {
+                color: #fff;
+                font-weight: 500;
+                margin-bottom: 1rem;
+                border-radius: 8px;
+                transition: background 0.2s;
+            }
+            .sidebar .nav-link.active, .sidebar .nav-link:hover {
+                background: #7c3aed;
+                color: #fbbf24;
+            }
             .dashboard-card {
-                background: #f3e8ff;
-                border-radius: 12px;
-                box-shadow: 0 2px 8px rgba(111,66,193,0.08);
-                padding: 1.5rem;
+                background: #fff;
+                border-radius: 16px;
+                box-shadow: 0 2px 16px rgba(75,38,115,0.10);
+                padding: 2rem 1.5rem;
                 margin-bottom: 2rem;
                 position: relative;
                 z-index: 2;
+                border: 1px solid #ececec;
             }
-            .dashboard-title {
-                color: #7c3aed;
+            .dashboard-card h5 {
+                color: #4B2673;
                 font-weight: bold;
-                letter-spacing: 2px;
             }
-
-            /* Adicionar um efeito de vidro ao fundo das divs */
+            .dashboard-card .fs-3 {
+                font-weight: bold;
+                font-size: 2rem;
+            }
+            .dashboard-card .text-success {
+                color: #22c55e !important;
+            }
+            .dashboard-card .text-danger {
+                color: #e53e3e !important;
+            }
+            .dashboard-card .text-primary {
+                color: #7c3aed !important;
+            }
             .glass-effect {
-                background: rgba(255, 255, 255, 0.85); /* Menos transparência para não sumir atrás do fundo */
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.95);
+                border: 1px solid #ececec;
+                border-radius: 16px;
                 position: relative;
                 z-index: 2;
+                box-shadow: 0 2px 16px rgba(75,38,115,0.10);
             }
-
-            /* Ajustar fundo da página para destacar o efeito */
-            body {
-                background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
-                background-size: cover;
+            .dashboard-header {
+                color: #4B2673;
+                font-size: 2.2rem;
+                font-weight: bold;
+                letter-spacing: 1px;
+            }
+            .dashboard-highlight {
+                background: linear-gradient(90deg, #7c3aed 60%, #4B2673 100%);
+                color: #fbbf24;
+                border-radius: 12px;
+                padding: 1rem 2rem;
+                font-size: 1.5rem;
+                font-weight: bold;
+                box-shadow: 0 2px 8px rgba(75,38,115,0.10);
+                margin-bottom: 1rem;
+            }
+            .dashboard-label {
+                color: #4B2673;
+                font-weight: 500;
+            }
+            .dashboard-value {
+                color: #fbbf24;
+                font-weight: bold;
+                font-size: 2rem;
+            }
+            .dashboard-user {
+                color: #4B2673;
+                font-weight: 500;
+                font-size: 1.1rem;
+            }
+            .dashboard-invest {
+                color: #7c3aed;
+                font-weight: bold;
             }
         </style>
     </head>
-    <body class="vh-100" style="background: url('images/finanças_pessoais.jpeg') no-repeat center center; background-size: cover;">
+    <body class="vh-100">
         <?php
         require_once dirname(__DIR__) . '/model/Lancamento.class.php';
         $lancamento = new Lancamento();
@@ -80,19 +144,19 @@
             <div class="container mt-4">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="dashboard-card">
+                        <div class="dashboard-card card-mes-atual">
                             <!-- Título removido -->
                             <p class="fs-3 text-success"><?php echo $this->viewReceita(); ?></p>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="dashboard-card">
+                        <div class="dashboard-card card-mes-atual">
                             <!-- Título removido -->
                             <p class="fs-3 text-danger"><?php echo $this->viewDespesa(); ?></p>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="dashboard-card glass-effect text-center">
+                        <div class="dashboard-card card-mes-atual glass-effect text-center">
                             <!-- Título removido -->
                             <p class="fs-3 text-primary">
                                 <?php 
@@ -104,26 +168,26 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card moderno: Composição das Despesas -->
-                <div class="row justify-content-center">
-                    <div class="col-12 col-md-6">
-                        <div class="dashboard-card glass-effect text-center">
+                <!-- Cards de gráficos alinhados à esquerda e card de composição à direita -->
+                <div class="row">
+                    <div class="col-12 col-lg-6 d-flex flex-column">
+                        <div class="dashboard-card" style="width: 100%;">
+                            <h5 class="mb-3 text-center">Comparativo Mensal</h5>
+                            <canvas id="graficoFinanceiro" height="120"></canvas>
+                        </div>
+                        <div class="dashboard-card" style="width: 100%;">
+                            <h5 class="mb-3 text-center">Saldo Acumulado/Mês</h5>
+                            <canvas id="graficoSaldoAcumulado" height="120"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 d-flex align-items-stretch justify-content-end">
+                        <div class="dashboard-card glass-effect text-center w-100" style="max-width: 700px; margin-left: auto;">
                             <h5 class="mb-3">Composição das Despesas</h5>
                             <canvas id="graficoComposicaoDespesas" height="120"></canvas>
                         </div>
                     </div>
                 </div>
-    <div class="dashboard-card" style="width: 50%; margin-left: 0; margin-right: auto;">
-            <h5 class="mb-3">Comparativo Mensal: Receitas x Despesas</h5>
-            <canvas id="graficoFinanceiro" height="120"></canvas>
-        </div>
-
-    <!-- Card moderno: Saldo acumulado de cada mês -->
-    <div class="dashboard-card" style="width: 50%; margin-left: 0; margin-right: auto;">
-        <h5 class="mb-3">Saldo Acumulado por Mês</h5>
-        <canvas id="graficoSaldoAcumulado" height="120"></canvas>
-
-    </div>
+                <!-- Os cards de gráficos agora estão dentro do grid principal, removendo duplicatas vazias -->
             </div>
         </main>
         <footer>
@@ -152,7 +216,7 @@
                         {
                             label: 'Despesas',
                             data: despesas,
-                            backgroundColor: '#e53e3e',
+                            backgroundColor: '#ffd700',
                         }
                     ]
                 },
@@ -188,9 +252,22 @@
                     responsive: true,
                     plugins: {
                         legend: { position: 'bottom' },
-                        title: { display: false }
+                        title: { display: false },
+                        datalabels: {
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 16
+                            },
+                            formatter: function(value, context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = total ? ((value / total) * 100).toFixed(1) + '%' : value;
+                                return percent;
+                            }
+                        }
                     }
-                }
+                },
+                plugins: [ChartDataLabels]
             });
 
             // Saldo acumulado por mês
