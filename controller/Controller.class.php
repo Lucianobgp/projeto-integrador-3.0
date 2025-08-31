@@ -171,7 +171,9 @@ class Controller
         $anoAtual = date("Y");
 
     // Sidebar container
-    echo '<div class="sidebar custom-sidebar d-flex flex-column p-3">';
+    echo '<button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>';
+    echo '<div class="sidebar custom-sidebar d-flex flex-column p-3" id="sidebar">';
+    echo '<div id="sidebar-overlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1039;background:rgba(0,0,0,0.3);"></div>';
     echo '  <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none fs-4 fw-bold logo-title">SFP-GZ</a>';
         echo '  <hr>';
         echo '  <ul class="nav nav-pills flex-column mb-auto fs-5">';
@@ -264,6 +266,70 @@ class Controller
         echo '</div>';
         // CSS direto
         echo '<style>
+            .sidebar-toggle {
+                position: fixed;
+                top: 16px;
+                left: 16px;
+                z-index: 2001;
+                background: #6f42c1;
+                border: none;
+                color: #fff;
+                padding: 8px 12px;
+                border-radius: 6px;
+                font-size: 2rem;
+                cursor: pointer;
+                display: none;
+            }
+            @media (max-width: 991px) {
+                .sidebar-toggle {
+                    display: block;
+                }
+                #sidebar {
+                    position: fixed;
+                    top: 0;
+                    left: -100vw;
+                    width: 80vw;
+                    max-width: 320px;
+                    min-height: 100vh;
+                    height: 100vh;
+                    transition: left 0.3s;
+                    z-index: 1040;
+                }
+                #sidebar.active {
+                    left: 0;
+                }
+                #sidebar-overlay.active {
+                    display: block;
+                }
+                main, .main-content {
+                    filter: blur(2px);
+                    pointer-events: none;
+                }
+                #sidebar.active ~ main, #sidebar.active ~ .main-content {
+                    filter: none;
+                    pointer-events: auto;
+                }
+            }
+            @media (min-width: 992px) {
+                .sidebar-toggle {
+                    display: none;
+                }
+                #sidebar {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 260px;
+                    min-height: 100vh;
+                    height: 100vh;
+                    z-index: 1040;
+                }
+                #sidebar-overlay {
+                    display: none !important;
+                }
+                main, .main-content {
+                    margin-left: 260px;
+                }
+            }
             .custom-sidebar {
                 background-color: #4B2673; /* cor sólida igual ao restante do sistema */
                 color: #fff;
@@ -352,6 +418,18 @@ class Controller
                 background-color: #ede7f6 !important;
             }
         </style>';
+        echo '<script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var overlay = document.getElementById("sidebar-overlay");
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        }
+        document.getElementById("sidebar-overlay").onclick = function() {
+            document.getElementById("sidebar").classList.remove("active");
+            this.classList.remove("active");
+        };
+        </script>';
         // ...modais de despesas e saldo, scripts de limpeza, etc...
         // MODAL PAGAMENTO
         echo '<div class="modal fade" id="modalDespesasMes" tabindex="-1" aria-labelledby="modalDespesasMesLabel" aria-hidden="true">';
