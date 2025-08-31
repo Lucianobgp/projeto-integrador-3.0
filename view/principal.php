@@ -58,6 +58,19 @@
                 $despesas[$item->mes - 1] = (float)$item->total;
             }
         }
+        // Buscar composição das despesas por categoria/plano
+        $composicaoDespesas = [];
+        try {
+            $bd = $lancamento->conectar();
+            $sql = "SELECT tp.desc_plano as categoria, SUM(valor_lanc) as total FROM db_financaspi.tb_lancamento tl LEFT JOIN db_financaspi.tb_cad_plano tp ON tp.id_cad_plano = tl.id_cad_plano WHERE tl.id_cad_tipo = 2 AND YEAR(tl.data_venc) = YEAR(CURDATE()) GROUP BY tp.desc_plano ORDER BY total DESC";
+            $query = $bd->prepare($sql);
+            $query->execute();
+            $composicaoDespesas = $query->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            $composicaoDespesas = [];
+        }
+        $categoriasDespesas = array_map(function($item) { return $item->categoria; }, $composicaoDespesas);
+        $valoresDespesas = array_map(function($item) { return (float)$item->total; }, $composicaoDespesas);
         ?>
         <header>
             <!-- place navbar here -->
@@ -91,6 +104,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- Card moderno: Composição das Despesas -->
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-6">
+                        <div class="dashboard-card glass-effect text-center">
+                            <h5 class="mb-3">Composição das Despesas</h5>
+                            <canvas id="graficoComposicaoDespesas" height="120"></canvas>
+                        </div>
+                    </div>
+                </div>
     <div class="dashboard-card" style="width: 50%; margin-left: 0; margin-right: auto;">
             <h5 class="mb-3">Comparativo Mensal: Receitas x Despesas</h5>
             <canvas id="graficoFinanceiro" height="120"></canvas>
@@ -113,6 +135,9 @@
             const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
             const receitas = <?php echo json_encode($receitas); ?>;
             const despesas = <?php echo json_encode($despesas); ?>;
+            // Dados para gráfico de rosca (composição das despesas)
+            const categoriasDespesas = <?php echo json_encode($categoriasDespesas); ?>;
+            const valoresDespesas = <?php echo json_encode($valoresDespesas); ?>;
             const ctx = document.getElementById('graficoFinanceiro').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
@@ -139,6 +164,31 @@
                     },
                     scales: {
                         y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Gráfico de rosca para composição das despesas
+            const ctxComposicao = document.getElementById('graficoComposicaoDespesas').getContext('2d');
+            new Chart(ctxComposicao, {
+                type: 'doughnut',
+                data: {
+                    labels: categoriasDespesas,
+                    datasets: [{
+                        label: 'Despesas',
+                        data: valoresDespesas,
+                        backgroundColor: [
+                            '#7c3aed', '#e53e3e', '#38bdf8', '#fbbf24', '#22c55e', '#f472b6', '#818cf8', '#f59e42', '#10b981', '#a3e635', '#f43f5e', '#6366f1'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        title: { display: false }
                     }
                 }
             });
