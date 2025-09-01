@@ -26,10 +26,25 @@
         body {
             background: #f0f2f5;
         }
-
+        /* Layout flexbox para centralizar o conteúdo considerando sidebar fixa */
+        #wrapper {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
         .content-wrapper {
-            margin: 2rem auto;
+            margin-top: 20px;
             max-width: 1400px;
+            width: 100%;
             padding: 0 1rem;
         }
 
@@ -116,7 +131,8 @@
     </style>
 </head>
 <body>
-    <div class="content-wrapper">
+    <div class="main-content">
+        <div class="content-wrapper">
         <div class="card">
             <div class="card-header text-center">
                 <h4 class="mb-0"><i class="bi bi-list-check"></i> Consulta de Planos de Contas</h4>
@@ -138,7 +154,6 @@
             </div>
 
             <div class="table-responsive">
-                <h5 class="text-center mb-3">Planos de Contas Cadastrados <small class="text-muted">(Primeiros 5 registros destacados)</small></h5>
                 <table id="listar-plano" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
@@ -173,6 +188,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     </div>
 

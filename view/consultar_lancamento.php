@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.min.css">
     <title>Consulta de Lançamentos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,10 +11,25 @@
         body {
             background: #f0f2f5;
         }
-
+        /* Layout flexbox para centralizar o conteúdo considerando sidebar fixa */
+        #wrapper {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
         .content-wrapper {
-            margin: 2rem auto;
+            margin-top: 20px;
             max-width: 1400px;
+            width: 100%;
             padding: 0 1rem;
         }
 
@@ -135,7 +151,8 @@
     </style>
 </head>
 <body>
-    <div class="content-wrapper">
+    <div class="main-content">
+        <div class="content-wrapper">
         <div class="card">
             <div class="card-header text-center">
                     <h4 class="mb-0"> 
@@ -160,7 +177,7 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table">
+                <table id="listar-lancamento" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th class="column-hide">Código</th>
@@ -226,7 +243,36 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#listar-lancamento').DataTable({
+                lengthMenu: [5, 10],
+                pageLength: 5,
+                order: [],
+                language: {
+                    emptyTable: "Nenhum registro encontrado",
+                    info: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    infoEmpty: "Mostrando 0 até 0 de 0 registros",
+                    infoFiltered: "(Filtrados de _MAX_ registros)",
+                    infoThousands: ".",
+                    loadingRecords: "Carregando...",
+                    processing: "Processando...",
+                    zeroRecords: "Nenhum registro encontrado",
+                    search: "Pesquisar",
+                    paginate: {
+                        first: "Primeiro",
+                        last: "Último",
+                        next: "Próximo",
+                        previous: "Anterior"
+                    },
+                }
+            });
+        });
+    </script>
             </div>
+        </div>
         </div>
     </div>
 

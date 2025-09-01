@@ -12,9 +12,25 @@
             background: #f8f9fa !important;
             min-height: 100vh;
         }
+        /* Layout flexbox para centralizar o conteúdo considerando sidebar fixa */
+        #wrapper {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
         .form-container {
             max-width: 900px;
-            margin: 80px auto 0 auto; /* Espaço para navbar fixa */
+            margin-top: 10px;
+            width: 100%;
         }
         .card {
             border: none;
@@ -98,7 +114,8 @@
     </style>
 </head>
 <body class="bg-light">
-    <div class="container form-container">
+    <div class="main-content">
+        <div class="container form-container">
         <div class="card">
             <div class="card-header text-center">
                 <h4 class="mb-0">
@@ -165,6 +182,7 @@
                     </div>
                 </div>
             </form>
+        </div>
         </div>
     </div>
 

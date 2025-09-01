@@ -12,9 +12,25 @@
             background: #f8f9fa !important;
             min-height: 100vh;
         }
+        /* Layout flexbox para centralizar o conteúdo considerando sidebar fixa */
+        #wrapper {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
         .form-container {
             max-width: 900px;
-            margin: 6rem auto 0 auto;
+            margin-top: 20px;
+            width: 100%;
         }
         .card {
             border: none;

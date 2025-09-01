@@ -26,10 +26,25 @@
         body {
             background: #f0f2f5;
         }
-
+        /* Layout flexbox para centralizar o conteúdo considerando sidebar fixa */
+        #wrapper {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
         .content-wrapper {
-            margin: 2rem auto;
+            margin-top: 20px;
             max-width: 1400px;
+            width: 100%;
             padding: 0 1rem;
         }
 
@@ -128,7 +143,8 @@
 </head>
 
 <body>
-    <div class="content-wrapper">
+    <div class="main-content">
+        <div class="content-wrapper">
         <div class="card">
             <div class="card-header text-center">
                 <h4 class="mb-0"><i class="bi bi-bank"></i> Consulta de Bancos</h4>
@@ -225,6 +241,7 @@
                     });
                 </script>
             </div>
+        </div>
         </div>
     </div>
 </body>
