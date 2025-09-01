@@ -1,13 +1,32 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.min.css">
     <title>Consulta de Lançamentos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js" defer></script>
+    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.min.js" defer></script>
     <style>
+        /* Estilo para os 5 primeiros registros - mais visível */
+        .sticky-row {
+            background-color: #ede7f6 !important;
+            border-left: 4px solid #7c3aed !important;
+            font-weight: 500;
+        }
+        /* Otimizações de performance */
+        .dataTables_wrapper {
+            opacity: 1 !important;
+        }
+        /* Reduzir animações para melhorar performance */
+        .table-responsive {
+            contain: content;
+            will-change: transform;
+        }
         body {
             background: #f0f2f5;
         }
@@ -243,14 +262,22 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.min.js"></script>
     <script>
+        // Aplicar estilo diretamente nas linhas antes do DataTables inicializar
         $(document).ready(function() {
+            // Primeiramente, aplicar a classe aos primeiros 5 registros diretamente
+            $('#listar-lancamento tbody tr').slice(0, 5).addClass('sticky-row');
+
+            // Inicializar DataTables com configurações otimizadas para performance
             var table = $('#listar-lancamento').DataTable({
-                lengthMenu: [5, 10],
+                lengthMenu: [5, 10, 25, 50],
                 pageLength: 5,
                 order: [],
+                processing: true,
+                deferRender: true,
+                paging: true,
+                searching: true,
+                stateSave: false,
                 language: {
                     emptyTable: "Nenhum registro encontrado",
                     info: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -262,13 +289,27 @@
                     zeroRecords: "Nenhum registro encontrado",
                     search: "Pesquisar",
                     paginate: {
-                        first: "Primeiro",
-                        last: "Último",
                         next: "Próximo",
-                        previous: "Anterior"
+                        previous: "Anterior",
+                        first: "Primeiro",
+                        last: "Último"
                     },
+                    lengthMenu: "Exibir _MENU_ resultados por página"
+                },
+                drawCallback: function() {
+                    // Garantir que os primeiros 5 registros na página atual tenham a classe
+                    $('#listar-lancamento tbody tr').removeClass('sticky-row');
+                    $('#listar-lancamento tbody tr').slice(0, 5).addClass('sticky-row');
+                },
+                initComplete: function() {
+                    // Garantir que a tabela seja totalmente visível após carregar
+                    $(this).show();
                 }
             });
+            // Mostrar a tabela explicitamente
+            $('#listar-lancamento').css('opacity', '1');
+            // Forçar exibição da primeira página sem animações complexas
+            table.page(0).draw(false);
         });
     </script>
             </div>
