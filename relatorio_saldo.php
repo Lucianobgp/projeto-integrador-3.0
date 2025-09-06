@@ -34,7 +34,7 @@ $nomesMeses = [
 $mesNome = $nomesMeses[$mes];
 
 // Caminho do logo no servidor
-$logoPath = 'images/bg-login.jpg';
+$logoPath = 'images/logo.png';
 
 // Verifica se o arquivo da imagem existe e o converte para Base64
 if (file_exists($logoPath)) {
