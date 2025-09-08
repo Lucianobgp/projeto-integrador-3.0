@@ -93,7 +93,7 @@ class Controller
 
             //eviar email
             if (! $mail->Send()) {
-                include_once 'recuperar.php';
+                include_once 'recuperar_senha.php';
                 $this->mostrarMensagem("Erro ao enviar e-mail! $mail->ErrorInfo");
             } else {
                 include_once 'login.php';
@@ -101,7 +101,7 @@ class Controller
             }
 
         } else {
-            include_once 'recuperar.php';
+            include_once 'recuperar_senha.php';
             $this->mostrarMensagem("E-mail não cadastrado!");
         }
     }
@@ -1863,28 +1863,13 @@ class Controller
     //inserir usuário
     public function inserir_usuario($nome_usuario, $email, $senha)
     {
-        //instanciar a classe Autor
         $objUsuario = new Usuario();
-        //invocar o método
         if ($objUsuario->inserirUsuario($nome_usuario, $email, $senha) == true) {
-            //iniciar sessao
-            session_start();
-            //inserir menu
-            $menu      = $this->menu();
-            $resultado = $objUsuario->consultarUsuario(null);
-            //incluir a view
-            include_once 'view/consultar_usuario.php';
-            //mostrar mensagem
-            $this->mostrarMensagem("Usuário inserido com sucesso!");
+            echo '<script>alert("Usuário Cadastrado com Sucesso!"); window.location.href = "login.php";</script>';
+            exit;
         } else {
-            //iniciar sessao
-            session_start();
-            //inserir menu
-            $menu = $this->menu();
-            //incluir a view
-            include_once 'view/consultar_usuario.php';
-            //mostrar mensagem
-            $this->mostrarMensagem("Erro ao inserir Usuário!");
+            echo '<script>alert("Erro ao inserir Usuário!"); window.location.href = "inserir_usuario.php";</script>';
+            exit;
         }
     }
 

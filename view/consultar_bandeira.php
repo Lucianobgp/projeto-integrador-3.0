@@ -200,7 +200,7 @@
             // Inicializa a tabela com configurações para mostrar 5 registros por padrão
             var table = $('#listar-bandeira').DataTable({
                 // Define para mostrar 5 registros por página
-                lengthMenu: [5, 10, 25, 50],
+                lengthMenu: [5, 10],
                 pageLength: 5,
                 
                 // Desabilita ordenação inicial para manter a ordem do PHP
