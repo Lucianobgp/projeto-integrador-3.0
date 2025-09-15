@@ -52,13 +52,15 @@ class Usuario extends Conexao
         $this->senha = $senha;
     }
 
-    // Método Inserir Usuário
+    // Método Inserir Usuário (AJUSTADO PARA SEGURANÇA)
     public function inserirUsuario($nome_usuario, $email, $senha)
     {
-        //setar os atributos
+        // Criptografa a senha antes de setar o atributo
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
         $this->setNomeUsuario($nome_usuario);
         $this->setEmail($email);
-        $this->setSenha($senha);
+        $this->setSenha($senha_hash); // Seta a senha criptografada
 
         //montar query
         $sql = "INSERT INTO tb_cad_usuario (id_cad_usuario, nome_usuario, email, senha)
@@ -78,11 +80,9 @@ class Usuario extends Conexao
             //excutar a query
             $query->execute();
             //retorna o resultado
-            //print "Inserido";
             return true;
 
         } catch (PDOException $e) {
-            //print "Erro ao inserir usuário";
             return false;
         }
     }
@@ -122,19 +122,20 @@ class Usuario extends Conexao
             return $resultado;
 
         } catch (PDOException $e) {
-            //print "Erro ao consultar usuário";
             return false;
         }
     }
 
-    //método alterar usuario
+    //método alterar usuario (AJUSTADO PARA SEGURANÇA)
     public function alterarUsuario($id_cad_usuario, $nome_usuario, $email, $senha)
     {
-        //setar os atributos
         $this->setIdCadUsuario($id_cad_usuario);
         $this->setNomeUsuario($nome_usuario);
         $this->setEmail($email);
-        $this->setSenha($senha);
+
+        // Criptografa a senha antes de setar o atributo
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+        $this->setSenha($senha_hash);
 
         //montar query
         $sql = "UPDATE tb_cad_usuario SET nome_usuario = :nome_usuario, email = :email, senha = :senha WHERE id_cad_usuario = :id_cad_usuario";
@@ -153,11 +154,9 @@ class Usuario extends Conexao
             //excutar a query
             $query->execute();
             //retorna o resultado
-            //print "Alterado";
             return true;
 
         } catch (PDOException $e) {
-            //print "Erro ao alterar usuario";
             return false;
         }
     }
@@ -186,51 +185,38 @@ class Usuario extends Conexao
             return true;
 
         } catch (PDOException $e) {
-            // print "Erro ao excluir usuario: " . $e->getMessage();
             return false;
         }
     }
 
-    //método validar login
+    //método validar login (AJUSTADO PARA SEGURANÇA)
     public function validarLogin($email, $senha)
-    {
-        // setar os dados
-        $this->setEmail($email);
-        $this->setSenha($senha);
+{
+    // Busca o usuário apenas pelo email
+    $sql = "SELECT senha FROM tb_cad_usuario WHERE email = :email";
 
-        // sql
-        $sql = "SELECT COUNT(*) AS quantidade FROM tb_cad_usuario where email= :email and senha= :senha";
+    try {
+        $bd = $this->conectar();
+        $query = $bd->prepare($sql);
+        $query->bindValue(':email', $email, PDO::PARAM_STR);
+        $query->execute();
+        $user = $query->fetch(PDO::FETCH_ASSOC);
 
-        try {
-            // conectar com o banco
-            $bd = $this->conectar();
-            // preparar o sql
-            $query = $bd->prepare($sql);
-            // blindagem dos dados
-            $query->bindvalue(':email', $this->getEmail(), PDO::PARAM_STR);
-            $query->bindvalue(':senha', $this->getSenha(), PDO::PARAM_STR);
-            // executar a query
-            $query->execute();
-            // retorna o resultado
-            $resultado = $query->fetchAll(PDO::FETCH_OBJ);
-            // verificar resultado
-            foreach ($resultado as $key => $valor) {
-                print $quantidade = $valor->quantidade;
-            }
-            //testar quantidade
-            if ($quantidade == 1) {
+        // Se o usuário existe, verifica a senha
+        if ($user) {
+            // A função password_verify compara a senha em texto puro com o hash
+            if (password_verify($senha, $user['senha'])) {
                 return true;
-            } else {
-                return false;
             }
-
-        } catch (PDOException $e) {
-            //print "Erro ao consultar";
-            return false;
         }
-    }
 
-     // metodo validarEmail
+        return false;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
+
+    // metodo validarEmail
     public function validarEmail($email)
     {
         //setar os dados
@@ -262,17 +248,19 @@ class Usuario extends Conexao
             }
 
         } catch (PDOException $e) {
-            //print "Erro ao consultar";
             return false;
         }
     }
 
-    //Alterar Senha
+    //Alterar Senha (AJUSTADO PARA SEGURANÇA)
     public function alterarSenha($email, $senha)
     {
+        // Criptografa a nova senha antes de setar o atributo
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
         //setar os dados
         $this->setEmail($email);
-        $this->setSenha($senha);
+        $this->setSenha($senha_hash);
 
         //montar query
         $sql = "update tb_cad_usuario set senha= :senha where email= :email";
@@ -290,7 +278,6 @@ class Usuario extends Conexao
             //retorna o resultado
             return true;
         } catch (PDOException $e) {
-            //print "Erro ao consultar";
             return false;
         }
     }
