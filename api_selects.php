@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: http://gzfinanceiropessoal.com.br");
 header('Content-Type: application/json; charset=utf-8');
 
 $host = "db_financaspi.mysql.dbaas.com.br";
